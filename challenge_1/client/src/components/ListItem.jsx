@@ -13,16 +13,24 @@ const StyledH4 = styled.h4`
   margin: 0 0 10px 0;
 `;
 
+const StyledPWrapper = styled.div`
+  max-width: 80vw;
+  overflow-x: hidden;
+`;
 const StyledP = styled.p`
+  display: inline-block;
   margin: 0;
   text-indent: 2rem;
+  max-width: 60vw;
 `;
 
 const ListItem = (props) => {
   return (
     <StyledListItem>
       <StyledH4>Year: {props.event.date} ></StyledH4>
-      <StyledP>{props.event.description}</StyledP>
+      <StyledPWrapper>
+        <StyledP>{props.event.description}</StyledP>
+      </StyledPWrapper>
     </StyledListItem>
   );
 };

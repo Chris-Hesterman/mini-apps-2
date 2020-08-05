@@ -93,7 +93,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       events: [],
-      pageCount: 10,
+      pageCount: 3,
       currentPage: 1,
       currentQuery: ''
     };
@@ -101,17 +101,20 @@ class App extends React.Component {
     this.handlePage = this.handlePage.bind(this);
   }
 
-  getEventPage(query, page = this.state.currentPage) {
-    console.log(query);
+  getEventPage(query, page = 1) {
+    console.log(query, page);
     const getURL = `http://127.0.0.1:3000/events/?q=${query}&_sort=date&_page=${page}&_limit=4`;
     console.log('get');
     axios
       .get(getURL)
       .then((response) => {
         console.log(response);
+        let pageCount = +response.headers['x-total-count'] / 4;
         this.setState({
           events: response.data,
-          currentQuery: query
+          currentQuery: query,
+          currentPage: page,
+          pageCount: pageCount
         });
       })
       .catch((err) => {
@@ -132,6 +135,7 @@ class App extends React.Component {
         <GlobalStyle />
         <Title />
         <Search send={this.getEventPage} />
+        <h3>Current subject: {this.state.currentQuery || 'None yet'}</h3>
         <List events={this.state.events} />
         <StyledDiv>
           <ReactPaginate
@@ -148,6 +152,7 @@ class App extends React.Component {
             nextLinkClassName={'next-link'}
             pageLinkClassName={'page-link'}
             activeLinkClassName={'active-link'}
+            forcePage={this.state.currentPage - 1}
           />
         </StyledDiv>
       </StyledWrapper>

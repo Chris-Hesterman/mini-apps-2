@@ -8,7 +8,6 @@ const StyledInput = styled.input`
   height: 25px;
   width: 175px;
   outline: none;
-  margin-bottom: 40px;
   border-radius: 5px;
 `;
 
@@ -44,7 +43,7 @@ class Search extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    this.props.send(this.state.inputValue);
+    this.props.send(this.state.inputValue, 1);
     this.setState({ inputValue: '' });
   }
 
