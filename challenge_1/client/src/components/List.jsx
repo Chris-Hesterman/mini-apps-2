@@ -11,6 +11,11 @@ const StyledList = styled.ul`
   padding: 0;
 `;
 
+const StyledH3 = styled.h3`
+  width: 100%;
+  text-align: left;
+`;
+
 const StyledItemWrapper = styled.div`
   width: 100%;
 `;
@@ -38,7 +43,14 @@ const List = (props) => {
       </StyledItemWrapper>
     );
   });
-  return <StyledList>{events}</StyledList>;
+  return (
+    <StyledList>
+      {props.currentQuery.length > 0 && (
+        <StyledH3>Current subject: {props.currentQuery}</StyledH3>
+      )}
+      {events}
+    </StyledList>
+  );
 };
 
 export default List;

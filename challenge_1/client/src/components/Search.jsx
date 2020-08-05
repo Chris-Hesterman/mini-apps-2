@@ -13,12 +13,13 @@ const StyledInput = styled.input`
 
 const StyledButton = styled.button`
   box-sizing: border-box;
-  padding: 4px;
+  padding: 6px 5px 4px 5px;
   margin-left: 25px;
   font-size: 1rem;
   font-weight: bold;
   border: 2px solid #d1913c;
   border-radius: 5px;
+  background: rgba(230, 230, 230, 0.5);
   box-shadow: 2px 2px 2px grey;
   outline: none;
   &:active {

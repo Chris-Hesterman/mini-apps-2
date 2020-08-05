@@ -14,7 +14,7 @@ const StyledH4 = styled.h4`
 `;
 
 const StyledPWrapper = styled.div`
-  max-width: 80vw;
+  max-width: 60vw;
   overflow-x: hidden;
 `;
 const StyledP = styled.p`
@@ -22,6 +22,7 @@ const StyledP = styled.p`
   margin: 0;
   text-indent: 2rem;
   max-width: 60vw;
+  min-width: 60vw;
 `;
 
 const ListItem = (props) => {

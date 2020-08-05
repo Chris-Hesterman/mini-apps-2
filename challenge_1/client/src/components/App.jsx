@@ -53,9 +53,10 @@ const GlobalStyle = createGlobalStyle`
     align-items: center;
     border: 2px solid #d1913c;
     border-radius: 25px;
-    padding: 0 10px;
+    padding: 2.5px 10px 0 10px;
     height: 25px;
     color: black;
+    background: rgba(230, 230, 230, 0.5);
     &:hover {
       background: green;
       color: white;
@@ -68,6 +69,14 @@ const GlobalStyle = createGlobalStyle`
   }
   a.page-link, a.next-link, a.prev-link {
     outline: none;
+  }
+  a.page-link {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 `;
 
@@ -123,10 +132,12 @@ class App extends React.Component {
   }
 
   handlePage(data) {
-    console.log(data.selected);
-    this.setState((prevState, currState) => {
-      return { currentPage: data.selected + 1 };
-    }, this.getEventPage(this.state.currentQuery, data.selected + 1));
+    if (this.state.events.length) {
+      console.log(data.selected);
+      this.setState((prevState, currState) => {
+        return { currentPage: data.selected + 1 };
+      }, this.getEventPage(this.state.currentQuery, data.selected + 1));
+    }
   }
 
   render() {
@@ -135,8 +146,10 @@ class App extends React.Component {
         <GlobalStyle />
         <Title />
         <Search send={this.getEventPage} />
-        <h3>Current subject: {this.state.currentQuery || 'None yet'}</h3>
-        <List events={this.state.events} />
+        <List
+          events={this.state.events}
+          currentQuery={this.state.currentQuery}
+        />
         <StyledDiv>
           <ReactPaginate
             pageCount={this.state.pageCount}
