@@ -1,4 +1,6 @@
 import React from 'react';
+import axios from 'axios';
+import moment from 'moment';
 import styled, { createGlobalStyle } from 'styled-components';
 import CryptoChart from './CryptoChart.jsx';
 
@@ -33,6 +35,24 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.fetchData = this.fetchData.bind(this);
+  }
+
+  fetchData(startDate = '2-22-2018', endDate = '2-22-2020') {
+    const fetchURL = `http://127.0.0.1:3000/crypto?start=${startDate}&end=${endDate}`;
+
+    axios
+      .get(fetchURL)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((err) => {
+        throw err;
+      });
+  }
+
+  componentDidMount() {
+    this.fetchData();
   }
 
   render() {
