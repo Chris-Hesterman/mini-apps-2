@@ -10,6 +10,10 @@ app.get('/', (req, res) => {
   res.send('Get request received');
 });
 
+app.get('/crypto', (req, res) => {
+  res.send(req.query);
+});
+
 app.listen(3000, (err) => {
   if (err) {
     throw err;
