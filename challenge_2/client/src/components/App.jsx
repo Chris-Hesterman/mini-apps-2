@@ -38,7 +38,7 @@ class App extends React.Component {
     this.fetchData = this.fetchData.bind(this);
   }
 
-  fetchData(startDate = '2-22-2018', endDate = '2-22-2020') {
+  fetchData(startDate = '2020-03-01', endDate = '2020-04-22') {
     const fetchURL = `http://127.0.0.1:3000/crypto?start=${startDate}&end=${endDate}`;
 
     axios
