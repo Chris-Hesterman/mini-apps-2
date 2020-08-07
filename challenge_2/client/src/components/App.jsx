@@ -54,14 +54,15 @@ class App extends React.Component {
     axios
       .get(fetchURL)
       .then((response) => {
-        console.log(response.data.bpi);
+        console.log(response);
         if (typeof response.data === 'string') {
-          console.log(response.data);
+          throw response.data;
         } else {
           this.setState({ data: response.data });
         }
       })
       .catch((err) => {
+        alert(err);
         throw err;
       });
   }

@@ -23,7 +23,7 @@ app.get('/crypto', (req, res) => {
       res.send(response.data);
     })
     .catch((err) => {
-      console.log(err);
+      res.send('Something went wrong, please refresh and try again!');
       throw err;
     });
 });
