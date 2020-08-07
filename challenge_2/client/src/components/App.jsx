@@ -3,17 +3,20 @@ import axios from 'axios';
 import moment from 'moment';
 import styled, { createGlobalStyle } from 'styled-components';
 import CryptoChart from './CryptoChart.jsx';
+import RangeInput from './RangeInput.jsx';
 
 const GlobalStyle = createGlobalStyle`
   html {
     height: 100vh;
-    padding: 0;
+    padding: 20px 0 0 0;
     margin: 0;
   }
   body {
     height: 100%;
     padding: 0;
     margin: 0;
+    font-family: sans-serif;
+    background-color: lightgreen;
   }
   div#app {
     width: 100%;
@@ -29,12 +32,19 @@ const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+`;
+
+const StyledH1 = styled.h1`
+  margin-bottom: 50px;
+  font-style: italic;
 `;
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      data: {}
+    };
     this.fetchData = this.fetchData.bind(this);
   }
 
@@ -44,7 +54,12 @@ class App extends React.Component {
     axios
       .get(fetchURL)
       .then((response) => {
-        console.log(response.data);
+        console.log(response.data.bpi);
+        if (typeof response.data === 'string') {
+          console.log(response.data);
+        } else {
+          this.setState({ data: response.data });
+        }
       })
       .catch((err) => {
         throw err;
@@ -59,8 +74,14 @@ class App extends React.Component {
     return (
       <StyledWrapper>
         <GlobalStyle />
-        <h1>Yes, it's a nifty chart!</h1>
-        <CryptoChart />
+        <StyledH1>Check Historic Bitcoin Value</StyledH1>
+        <RangeInput getRange={this.fetchData} />
+        {this.state.data.hasOwnProperty('bpi') && (
+          <CryptoChart
+            bpi={this.state.data.bpi}
+            dis={this.state.data.disclaimer}
+          />
+        )}
       </StyledWrapper>
     );
   }

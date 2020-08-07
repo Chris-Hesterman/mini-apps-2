@@ -3,8 +3,14 @@ import styled from 'styled-components';
 import Chart from 'chart.js';
 
 const StyledWrapper = styled.div`
-  width: 600px;
-  height: 300px;
+  width: 800px;
+  height: 400px;
+`;
+
+const StyledP = styled.p`
+  font-size: 10px;
+  color: rgba(0, 0, 0, 0.5);
+  font-family: sans-serif;
 `;
 
 class CryptoChart extends React.Component {
@@ -17,31 +23,26 @@ class CryptoChart extends React.Component {
 
   makeChart() {
     const ctx = this.canvasRef.current;
+    Chart.defaults.global.elements.point.borderColor = 'black';
+    Chart.defaults.global.elements.point.borderWidth = 1;
+    Chart.defaults.global.elements.point.pointStyle = 'circle';
+    Chart.defaults.global.elements.point.radius = 0;
+    Chart.defaults.global.elements.point.hitRadius = 8;
+    let labels = Object.keys(this.props.bpi);
+    let data = Object.values(this.props.bpi);
+
     var myChart = new Chart(ctx, {
-      type: 'bar',
+      type: 'line',
       data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: labels,
         datasets: [
           {
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(255, 206, 86, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-              'rgba(153, 102, 255, 0.2)',
-              'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-              'rgba(255, 99, 132, 1)',
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)',
-              'rgba(75, 192, 192, 1)',
-              'rgba(153, 102, 255, 1)',
-              'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
+            label: 'Bitcoin Value, USD',
+            data: data,
+            backgroundColor: ['rgba(255, 99, 132, 0.3)'],
+            borderColor: ['rgba(255, 99, 132, 1)'],
+            borderWidth: 2,
+            lineTension: 0
           }
         ]
       },
@@ -49,8 +50,22 @@ class CryptoChart extends React.Component {
         scales: {
           yAxes: [
             {
+              gridLines: {
+                color: 'rgba(0, 0, 0, .2)'
+              },
               ticks: {
-                beginAtZero: true
+                beginAtZero: true,
+                fontColor: '#222'
+              }
+            }
+          ],
+          xAxes: [
+            {
+              gridLines: {
+                color: 'rgba(0, 0, 0, .2)'
+              },
+              ticks: {
+                fontColor: '#222'
               }
             }
           ]
@@ -63,10 +78,17 @@ class CryptoChart extends React.Component {
     this.makeChart();
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props !== prevProps) {
+      this.makeChart();
+    }
+  }
+
   render() {
     return (
       <StyledWrapper>
         <canvas id="chart" ref={this.canvasRef}></canvas>
+        <StyledP>{this.props.dis}</StyledP>
       </StyledWrapper>
     );
   }
