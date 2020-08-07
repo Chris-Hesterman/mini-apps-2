@@ -19,7 +19,6 @@ app.get('/crypto', (req, res) => {
   axios
     .get(fetchURL)
     .then((response) => {
-      console.log(response.data);
       res.send(response.data);
     })
     .catch((err) => {
@@ -28,9 +27,4 @@ app.get('/crypto', (req, res) => {
     });
 });
 
-app.listen(3000, (err) => {
-  if (err) {
-    throw err;
-  }
-  console.log('listening on port 3000');
-});
+module.exports = app;
