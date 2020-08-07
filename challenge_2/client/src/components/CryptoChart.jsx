@@ -1,17 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Chart from 'chart.js';
-
-const StyledWrapper = styled.div`
-  width: 800px;
-  height: 400px;
-`;
-
-const StyledP = styled.p`
-  font-size: 10px;
-  color: rgba(0, 0, 0, 0.5);
-  font-family: sans-serif;
-`;
+import { StyledChartWrapper, StyledP } from '../styles.js';
 
 class CryptoChart extends React.Component {
   constructor(props) {
@@ -23,15 +13,16 @@ class CryptoChart extends React.Component {
 
   makeChart() {
     const ctx = this.canvasRef.current;
+    const labels = Object.keys(this.props.bpi);
+    const data = Object.values(this.props.bpi);
+
     Chart.defaults.global.elements.point.borderColor = 'black';
     Chart.defaults.global.elements.point.borderWidth = 1;
     Chart.defaults.global.elements.point.pointStyle = 'circle';
     Chart.defaults.global.elements.point.radius = 0;
     Chart.defaults.global.elements.point.hitRadius = 8;
-    let labels = Object.keys(this.props.bpi);
-    let data = Object.values(this.props.bpi);
 
-    var myChart = new Chart(ctx, {
+    const myChart = new Chart(ctx, {
       type: 'line',
       data: {
         labels: labels,
@@ -66,7 +57,9 @@ class CryptoChart extends React.Component {
               },
               ticks: {
                 fontColor: '#222'
-              }
+              },
+              autoSkip: true,
+              autoSkipPadding: 25
             }
           ]
         }
@@ -86,10 +79,10 @@ class CryptoChart extends React.Component {
 
   render() {
     return (
-      <StyledWrapper>
+      <StyledChartWrapper>
         <canvas id="chart" ref={this.canvasRef}></canvas>
         <StyledP>{this.props.dis}</StyledP>
-      </StyledWrapper>
+      </StyledChartWrapper>
     );
   }
 }

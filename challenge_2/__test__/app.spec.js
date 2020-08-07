@@ -11,4 +11,13 @@ describe('Test /crypto', () => {
         done();
       });
   });
+  test('It should require a start and end date', (done) => {
+    const res = request(app).get('/crypto');
+
+    res.then((response) => {
+      expect(response.statusCode).toBe(200);
+    });
+
+    done();
+  });
 });

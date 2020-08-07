@@ -4,41 +4,8 @@ import moment from 'moment';
 import styled, { createGlobalStyle } from 'styled-components';
 import CryptoChart from './CryptoChart.jsx';
 import RangeInput from './RangeInput.jsx';
+import { GlobalStyle, StyledAppWrapper, StyledH1 } from '../styles.js';
 
-const GlobalStyle = createGlobalStyle`
-  html {
-    height: 100vh;
-    padding: 20px 0 0 0;
-    margin: 0;
-  }
-  body {
-    height: 100%;
-    padding: 0;
-    margin: 0;
-    font-family: sans-serif;
-    background-color: lightgreen;
-  }
-  div#app {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-  }
-`;
-
-const StyledWrapper = styled.div`
-  width: 80%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-`;
-
-const StyledH1 = styled.h1`
-  margin-bottom: 50px;
-  font-style: italic;
-`;
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -54,7 +21,6 @@ class App extends React.Component {
     axios
       .get(fetchURL)
       .then((response) => {
-        console.log(response);
         if (typeof response.data === 'string') {
           throw response.data;
         } else {
@@ -73,7 +39,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <StyledWrapper>
+      <StyledAppWrapper>
         <GlobalStyle />
         <StyledH1>Check Historic Bitcoin Value</StyledH1>
         <RangeInput getRange={this.fetchData} />
@@ -83,7 +49,7 @@ class App extends React.Component {
             dis={this.state.data.disclaimer}
           />
         )}
-      </StyledWrapper>
+      </StyledAppWrapper>
     );
   }
 }
