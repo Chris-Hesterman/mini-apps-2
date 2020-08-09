@@ -10,7 +10,7 @@ import {
 const ListItem = (props) => {
   return (
     <StyledListItem>
-      <StyledItemH4>Year: {props.event.date} ></StyledItemH4>
+      <StyledItemH4>Year: {props.event.date}</StyledItemH4>
       <StyledItemPWrapper>
         <StyledItemP>{props.event.description}</StyledItemP>
       </StyledItemPWrapper>

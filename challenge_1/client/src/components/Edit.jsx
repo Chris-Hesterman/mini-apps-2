@@ -41,7 +41,8 @@ class Edit extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      events: []
+      events: [],
+      initialDescriptions: []
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -49,7 +50,8 @@ class Edit extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    this.props.save(this.state.events);
+
+    this.props.save(this.state.events, this.state.initialDescriptions);
   }
 
   handleChange(e) {
@@ -64,13 +66,18 @@ class Edit extends React.Component {
   }
 
   componentDidMount() {
+    const initialDescriptions = this.props.events.map((event) => {
+      return event.description.slice(0, 40);
+    });
     this.setState({
-      events: this.props.events
+      events: this.props.events,
+      initialDescriptions: initialDescriptions
     });
   }
 
   render() {
-    const inputs = this.props.events.map((event, index) => {
+    const eventStart = this.state.events.slice();
+    const inputs = eventStart.map((event, index) => {
       return (
         <StyledInputWrapper key={index}>
           <StyledDateInput

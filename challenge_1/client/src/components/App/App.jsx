@@ -22,6 +22,7 @@ class App extends React.Component {
     this.handlePage = this.handlePage.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
     this.saveEdit = this.saveEdit.bind(this);
+    this.putEvents = this.putEvents.bind(this);
   }
 
   getEventPage(query, page = 1) {
@@ -44,14 +45,38 @@ class App extends React.Component {
       });
   }
 
-  patchEvents(data) {
-    data.forEach((event) => {
-      axios
-        .patch('http:127.0.0.1:3000/events', event)
-        .then(() => console.log('updated'))
-        .catch((err) => alert('something went wrong', err));
+  putEvents(data, ids) {
+    this.setState({ events: data, edit: false });
+    let reqDescriptions = ids.map((id, index) => {
+      axios.put(
+        `http:127.0.0.1:3000/events?q=${JSON.stringify(id)}`,
+        data[index]
+      );
     });
+    Promise.all(reqDescriptions)
+      .then(() => {
+        alert('Edits saved!');
+      })
+      .catch((err) => {
+        console.log('Sorry, did not get saved. Please try again');
+      });
   }
+
+  // addIdsToDB() {
+  //   axios
+  //     .get('http:127.0.0.1:3000/events')
+  //     .then((response) => {
+  //       const dataWithIds = response.data.forEach((event, index) => {
+  //         event.id = index;
+  //       });
+  //       return dataWithIds;
+  //     })
+  //     .then((data) => {
+  //       let posts = data.map((item) => {
+  //         return axios.post();
+  //       });
+  //     });
+  // }
 
   handlePage(data) {
     if (this.state.events.length) {
@@ -67,8 +92,19 @@ class App extends React.Component {
     });
   }
 
-  saveEdit(data) {
-    this.setState({ events: data, edit: false });
+  saveEdit(data, original) {
+    const idOriginal = [];
+    const changedData = data.filter((event, index) => {
+      const newShortDesc = event.description.slice(0, 40);
+
+      if (newShortDesc !== original[index]) {
+        idOriginal.push(original[index]);
+        return event;
+      }
+    });
+    console.log('Trimmed', changedData);
+    console.log('Ids', idOriginal);
+    this.putEvents(changedData, idOriginal);
   }
 
   render() {
