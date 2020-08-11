@@ -26,57 +26,38 @@ class App extends React.Component {
   }
 
   getEventPage(query, page = 1) {
-    const getURL = `http://127.0.0.1:3000/events/?q=${query}&_sort=date&_page=${page}&_limit=4`;
-
+    const getURL = `/events?q=${query}&page=${page}&limit=4`;
+    console.log('hitting get request');
     axios
       .get(getURL)
       .then((response) => {
-        let pageCount = +response.headers['x-total-count'] / 4;
-
+        let pageCount = response.data.totalPages;
+        console.log('axios', response);
         this.setState({
-          events: response.data,
+          events: response.data.docs,
           currentQuery: query,
           currentPage: page,
           pageCount: pageCount
         });
       })
       .catch((err) => {
-        console.log(error);
+        console.log(err);
       });
   }
 
-  putEvents(data, ids) {
+  putEvents(data) {
     this.setState({ events: data, edit: false });
-    let reqDescriptions = ids.map((id, index) => {
-      axios.put(
-        `http:127.0.0.1:3000/events?q=${JSON.stringify(id)}`,
-        data[index]
-      );
-    });
-    Promise.all(reqDescriptions)
-      .then(() => {
-        alert('Edits saved!');
+    console.log('Made it to put', data);
+
+    axios
+      .put(`/events`, data)
+      .then((response) => {
+        console.log('events updated!:', response.config.data);
       })
       .catch((err) => {
         console.log('Sorry, did not get saved. Please try again');
       });
   }
-
-  // addIdsToDB() {
-  //   axios
-  //     .get('http:127.0.0.1:3000/events')
-  //     .then((response) => {
-  //       const dataWithIds = response.data.forEach((event, index) => {
-  //         event.id = index;
-  //       });
-  //       return dataWithIds;
-  //     })
-  //     .then((data) => {
-  //       let posts = data.map((item) => {
-  //         return axios.post();
-  //       });
-  //     });
-  // }
 
   handlePage(data) {
     if (this.state.events.length) {
@@ -92,22 +73,15 @@ class App extends React.Component {
     });
   }
 
-  saveEdit(data, original) {
-    const idOriginal = [];
-    const changedData = data.filter((event, index) => {
-      const newShortDesc = event.description.slice(0, 40);
-
-      if (newShortDesc !== original[index]) {
-        idOriginal.push(original[index]);
-        return event;
-      }
-    });
-    console.log('Trimmed', changedData);
-    console.log('Ids', idOriginal);
-    this.putEvents(changedData, idOriginal);
+  saveEdit(data) {
+    this.putEvents(data);
   }
 
   render() {
+    const eventsCopy = this.state.events.map((event) => {
+      return Object.assign({}, event);
+    });
+
     return (
       <StyledAppWrapper>
         <GlobalStyle />
@@ -116,12 +90,12 @@ class App extends React.Component {
         {this.state.edit ? (
           <Edit
             done={this.handleEdit}
-            events={this.state.events}
+            eventData={eventsCopy}
             save={this.saveEdit}
           />
         ) : (
           <List
-            events={this.state.events}
+            eventData={eventsCopy}
             currentQuery={this.state.currentQuery}
             edit={this.handleEdit}
           />

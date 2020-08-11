@@ -11,10 +11,10 @@ import {
 } from './List.css.js';
 
 const List = (props) => {
-  const events = props.events.map((event, index) => {
+  const events = props.eventData.map((event, index) => {
     return (
-      <StyledListItemWrapper key={index}>
-        <ListItem event={event} />
+      <StyledListItemWrapper key={event._id}>
+        <ListItem event={event.event} />
         <StyledListLine />
       </StyledListItemWrapper>
     );

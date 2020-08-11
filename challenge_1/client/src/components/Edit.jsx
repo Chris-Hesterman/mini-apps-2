@@ -41,8 +41,7 @@ class Edit extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      events: [],
-      initialDescriptions: []
+      events: []
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -51,27 +50,29 @@ class Edit extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
 
-    this.props.save(this.state.events, this.state.initialDescriptions);
+    this.props.save(this.state.events);
   }
 
   handleChange(e) {
     console.log('ok');
-    let newEvents = this.state.events.slice();
     let name = e.target.name;
-    let index = +e.target.dataset[name];
+    let editIndex = +e.target.dataset.index;
     let value = e.target.value;
+    let newEvent = this.state.events[editIndex];
+    newEvent.event[name] = value;
 
-    newEvents[index][name] = value;
-    this.setState({ events: newEvents });
+    let newState = this.state.events.map((event, index) => {
+      if (index === editIndex) {
+        return newEvent;
+      }
+      return event;
+    });
+    this.setState({ events: newState });
   }
 
   componentDidMount() {
-    const initialDescriptions = this.props.events.map((event) => {
-      return event.description.slice(0, 40);
-    });
     this.setState({
-      events: this.props.events,
-      initialDescriptions: initialDescriptions
+      events: this.props.eventData
     });
   }
 
@@ -83,15 +84,15 @@ class Edit extends React.Component {
           <StyledDateInput
             type="text"
             name="date"
-            data-date={`${index}`}
-            defaultValue={event.date}
+            data-index={index}
+            defaultValue={event.event.date}
             onChange={this.handleChange}
           ></StyledDateInput>
           <StyledTextArea
             type="text"
             name="description"
-            data-description={index}
-            defaultValue={event.description}
+            data-index={index}
+            defaultValue={event.event.description}
             rows="5"
             cols="100"
             onChange={this.handleChange}
