@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import { StyledInput, StyledButton } from './Search.css.js';
 
 class Search extends React.Component {
@@ -39,5 +40,9 @@ class Search extends React.Component {
     );
   }
 }
+
+Search.propTypes = {
+  send: PropTypes.func
+};
 
 export default Search;

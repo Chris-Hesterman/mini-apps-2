@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import ListItem from '../ListItem/ListItem.jsx';
 import {
   StyledList,
@@ -32,6 +33,12 @@ const List = (props) => {
       {events}
     </StyledList>
   );
+};
+
+List.propTypes = {
+  eventData: PropTypes.array,
+  currentQuery: PropTypes.string,
+  edit: PropTypes.func
 };
 
 export default List;

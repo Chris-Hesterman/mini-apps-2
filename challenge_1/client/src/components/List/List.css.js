@@ -6,7 +6,7 @@ export const StyledList = styled.ul`
   flex-direction: column;
   align-items: center;
   list-style-type: none;
-  margin: 0 20vw;
+  margin: 0
   padding: 0;
 `;
 

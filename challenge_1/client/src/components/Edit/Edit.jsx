@@ -1,41 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import { StyledEditButton } from './List/List.css.js';
-
-const StyledEditForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-top: 50px;
-`;
-
-const StyledInputWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-`;
-
-const StyledDateInput = styled.input`
-  border-radius: 4px;
-  border: 2px solid #d1913c;
-  background: rgba(230, 230, 230, 0.5);
-  &:hover {
-    background: lightpink;
-  }
-`;
-
-const StyledTextArea = styled.textarea`
-  margin-bottom: 10px;
-  border-radius: 4px;
-  border: 2px solid #d1913c;
-  background: rgba(230, 230, 230, 0.5);
-  outline: none;
-  &:hover {
-    background: lightpink;
-  }
-`;
+import PropTypes from 'prop-types';
+import { StyledEditButton } from '../List/List.css.js';
+import {
+  StyledEditForm,
+  StyledDateInput,
+  StyledInputWrapper,
+  StyledTextArea
+} from './Edit.css.js';
 
 class Edit extends React.Component {
   constructor(props) {
@@ -110,5 +82,11 @@ class Edit extends React.Component {
     );
   }
 }
+
+Edit.propTypes = {
+  done: PropTypes.func,
+  eventData: PropTypes.array,
+  save: PropTypes.func
+};
 
 export default Edit;

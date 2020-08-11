@@ -1,7 +1,7 @@
 const Events = require('../mongodb.js');
 
 const getRecords = (page, limit, query) => {
-  let newQuery = { 'event.description': { $regex: query } };
+  let newQuery = { 'event.description': { $regex: query, $options: 'i' } };
   if (!isNaN(query)) {
     newQuery = { 'event.date': query };
   }

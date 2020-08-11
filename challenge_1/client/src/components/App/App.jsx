@@ -5,7 +5,7 @@ import ReactPaginate from 'react-paginate';
 import Title from '../Title.jsx';
 import Search from '../Search/Search.jsx';
 import List from '../List/List.jsx';
-import Edit from '../Edit.jsx';
+import Edit from '../Edit/Edit.jsx';
 import { GlobalStyle, StyledAppWrapper, StyledAppDiv } from './App.css.js';
 
 class App extends React.Component {
@@ -27,12 +27,12 @@ class App extends React.Component {
 
   getEventPage(query, page = 1) {
     const getURL = `/events?q=${query}&page=${page}&limit=4`;
-    console.log('hitting get request');
+
     axios
       .get(getURL)
       .then((response) => {
         let pageCount = response.data.totalPages;
-        console.log('axios', response);
+
         this.setState({
           events: response.data.docs,
           currentQuery: query,
@@ -47,12 +47,11 @@ class App extends React.Component {
 
   putEvents(data) {
     this.setState({ events: data, edit: false });
-    console.log('Made it to put', data);
 
     axios
       .put(`/events`, data)
       .then((response) => {
-        console.log('events updated!:', response.config.data);
+        console.log('events updated!');
       })
       .catch((err) => {
         console.log('Sorry, did not get saved. Please try again');
@@ -83,24 +82,25 @@ class App extends React.Component {
     });
 
     return (
-      <StyledAppWrapper>
+      <StyledAppWrapper data-test="appComponent">
         <GlobalStyle />
-        <Title />
-        <Search send={this.getEventPage} />
+        <Title data-test="titleComponent" />
+        <Search data-test="searchComponent" send={this.getEventPage} />
         {this.state.edit ? (
           <Edit
+            data-test="editComponent"
             done={this.handleEdit}
             eventData={eventsCopy}
             save={this.saveEdit}
           />
         ) : (
           <List
+            data-test="listComponent"
             eventData={eventsCopy}
             currentQuery={this.state.currentQuery}
             edit={this.handleEdit}
           />
         )}
-
         <StyledAppDiv>
           <ReactPaginate
             pageCount={this.state.pageCount}
