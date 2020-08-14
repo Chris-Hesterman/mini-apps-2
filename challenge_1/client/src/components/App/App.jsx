@@ -8,16 +8,19 @@ import List from '../List/List.jsx';
 import Edit from '../Edit/Edit.jsx';
 import { GlobalStyle, StyledAppWrapper, StyledAppDiv } from './App.css.js';
 
+const initialState = {
+  events: [],
+  pageCount: 3,
+  currentPage: 1,
+  currentQuery: '',
+  edit: false,
+  error: false,
+  query: true
+};
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      events: [],
-      pageCount: 3,
-      currentPage: 1,
-      currentQuery: '',
-      edit: false
-    };
+    this.state = initialState;
     this.getEventPage = this.getEventPage.bind(this);
     this.handlePage = this.handlePage.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
@@ -37,11 +40,17 @@ class App extends React.Component {
           events: response.data.docs,
           currentQuery: query,
           currentPage: page,
-          pageCount: pageCount
+          pageCount: pageCount,
+          error: false,
+          query: true
         });
       })
       .catch((err) => {
-        console.log(err);
+        if (query.length === 0) {
+          this.setState({ query: false });
+        } else {
+          this.setState({ error: true });
+        }
       });
   }
 
@@ -51,10 +60,11 @@ class App extends React.Component {
     axios
       .put(`/events`, data)
       .then((response) => {
-        console.log('events updated!');
+        console.log('events updated!', response);
+        this.setState({ error: false });
       })
       .catch((err) => {
-        console.log('Sorry, did not get saved. Please try again');
+        this.setState({ error: true });
       });
   }
 
@@ -82,10 +92,14 @@ class App extends React.Component {
     });
 
     return (
-      <StyledAppWrapper data-test="appComponent">
+      <StyledAppWrapper data-test="appComponent" className="app">
         <GlobalStyle />
         <Title data-test="titleComponent" />
         <Search data-test="searchComponent" send={this.getEventPage} />
+        {this.state.error && (
+          <h2>Something went wrong! Please refresh and try again.</h2>
+        )}
+        {!this.state.query && <h2>Please submit a valid query.</h2>}
         {this.state.edit ? (
           <Edit
             data-test="editComponent"
@@ -102,22 +116,24 @@ class App extends React.Component {
           />
         )}
         <StyledAppDiv>
-          <ReactPaginate
-            pageCount={this.state.pageCount}
-            pageRangeDisplay={this.state.pageCount}
-            marginPagesDisplayed={1}
-            onPageChange={this.handlePage}
-            activeClassName={'selected'}
-            previousClassName={'previous'}
-            nextClassName={'next'}
-            containerClassName={'page-list'}
-            pageClassName={'page-li'}
-            previousLinkClassName={'prev-link'}
-            nextLinkClassName={'next-link'}
-            pageLinkClassName={'page-link'}
-            activeLinkClassName={'active-link'}
-            forcePage={this.state.currentPage - 1}
-          />
+          {this.state.events.length > 2 && (
+            <ReactPaginate
+              pageCount={this.state.pageCount}
+              pageRangeDisplay={this.state.pageCount}
+              marginPagesDisplayed={1}
+              onPageChange={this.handlePage}
+              activeClassName={'selected'}
+              previousClassName={'previous'}
+              nextClassName={'next'}
+              containerClassName={'page-list'}
+              pageClassName={'page-li'}
+              previousLinkClassName={'prev-link'}
+              nextLinkClassName={'next-link'}
+              pageLinkClassName={'page-link'}
+              activeLinkClassName={'active-link'}
+              forcePage={this.state.currentPage - 1}
+            />
+          )}
         </StyledAppDiv>
       </StyledAppWrapper>
     );

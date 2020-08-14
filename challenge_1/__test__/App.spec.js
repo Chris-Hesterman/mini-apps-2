@@ -2,14 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import checkPropTypes from 'check-prop-types';
 import Enzyme from 'enzyme';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import App from '../client/src/components/App/App.jsx';
 import List from '../client/src/components/List/List.jsx';
 import Edit from '../client/src/components/Edit/Edit.jsx';
+import Search from '../client/src/components/Search/Search.jsx';
+import { findByTestAttr } from '../testUtils/utils.js';
 
 Enzyme.configure({ adapter: new Adapter() });
-import { findByTestAttr } from '../testUtils/utils.js';
 
 const setUp = (props = {}) => {
   const component = shallow(<App {...props} />);

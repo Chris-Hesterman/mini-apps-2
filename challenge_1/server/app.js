@@ -2,6 +2,12 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const models = require('../data/models/index.js');
+const test = require('../data/seed.js');
+
+if (process.env.node_env === 'test') {
+  console.log(test.testSeed);
+  test.testSeed();
+}
 
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -11,20 +17,25 @@ app.get('/events', (req, res) => {
   const page = req.query.page;
   const limit = req.query.limit;
   const query = decodeURI(req.query.q);
-  let result = models.getRecords(page, limit, query);
 
-  result
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send('Please try again, server erred');
-    });
+  if (!page || !limit || !query) {
+    res
+      .status(500)
+      .end('Please refresh and try again. Be sure to submit a query!');
+  } else {
+    let result = models.getRecords(page, limit, query);
+
+    result
+      .then((data) => {
+        res.send(data);
+      })
+      .catch((err) => {
+        res.status(500).end('Please try again, server erred');
+      });
+  }
 });
 
 app.put('/events', (req, res) => {
-  //EACH BODY IS AN OBJECT!!!!
-  console.log('server', req.body);
   let events = req.body.map((event) => {
     return models.updateRecord(event._id, event);
   });
@@ -32,12 +43,11 @@ app.put('/events', (req, res) => {
   Promise.all(events)
     .then((responses) => {
       console.log('Server reports items updated');
-      res.end();
+      res.send(responses);
     })
     .catch((err) => {
-      res.status(500).send('Please try again');
+      res.status(500).send('Please refresh and try again.');
     });
-  console.log(req);
 });
 
 module.exports = app;

@@ -26,4 +26,8 @@ export const StyledButton = styled.button`
     transform: translate(1px, 1px);
     box-shadow: 1px 1px 1px grey;
   }
+  &:hover {
+    cursor: pointer;
+    background: rgba(230, 230, 230, 1);
+  }
 `;

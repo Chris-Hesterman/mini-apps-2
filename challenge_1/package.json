@@ -3,9 +3,16 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
+  },
   "scripts": {
     "test": "jest --watch",
     "start": "nodemon server/server.js",
+    "start:test": "node_env=\"test\" nodemon server/server.js",
     "build": "webpack --watch -d",
     "seedDB": "node ./data/seed.js"
   },
@@ -35,7 +42,10 @@
     "enzyme-adapter-react-16": "^1.15.3",
     "jest": "^26.3.0",
     "jest-enzyme": "^7.1.2",
+    "mockgoose": "^8.0.4",
     "nodemon": "^2.0.4",
+    "superagent": "^6.0.0",
+    "supertest": "^4.0.2",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12"
   }
