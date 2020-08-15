@@ -3,14 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "jest": {
-    "testEnvironment": "node",
-    "coveragePathIgnorePatterns": [
-      "/node_modules/"
-    ]
-  },
   "scripts": {
-    "test": "jest --watch",
+    "test": "jest --coverage",
+    "test:client": "jest --watchAll --projects test/client",
+    "test:server": "jest --projects test/server --watch",
     "start": "nodemon server/server.js",
     "start:test": "node_env=\"test\" nodemon server/server.js",
     "build": "webpack --watch -d",

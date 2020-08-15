@@ -31,27 +31,28 @@ class App extends React.Component {
   getEventPage(query, page = 1) {
     const getURL = `/events?q=${query}&page=${page}&limit=4`;
 
-    axios
-      .get(getURL)
-      .then((response) => {
-        let pageCount = response.data.totalPages;
+    if (query.length) {
+      axios
+        .get(getURL)
+        .then((response) => {
+          let pageCount = response.data.totalPages;
 
-        this.setState({
-          events: response.data.docs,
-          currentQuery: query,
-          currentPage: page,
-          pageCount: pageCount,
-          error: false,
-          query: true
+          this.setState({
+            events: response.data.docs,
+            currentQuery: query,
+            currentPage: page,
+            pageCount: pageCount,
+            error: false
+          });
+        })
+        .catch((err) => {
+          if (query.length === 0) {
+            this.setState({ query: false });
+          } else {
+            this.setState({ error: true });
+          }
         });
-      })
-      .catch((err) => {
-        if (query.length === 0) {
-          this.setState({ query: false });
-        } else {
-          this.setState({ error: true });
-        }
-      });
+    }
   }
 
   putEvents(data) {
@@ -99,23 +100,25 @@ class App extends React.Component {
         {this.state.error && (
           <h2>Something went wrong! Please refresh and try again.</h2>
         )}
-        {!this.state.query && <h2>Please submit a valid query.</h2>}
-        {this.state.edit ? (
+        {this.state.edit && (
           <Edit
             data-test="editComponent"
+            className="edit"
             done={this.handleEdit}
             eventData={eventsCopy}
             save={this.saveEdit}
           />
-        ) : (
+        )}
+        {!this.state.edit && (
           <List
             data-test="listComponent"
+            className="list"
             eventData={eventsCopy}
             currentQuery={this.state.currentQuery}
             edit={this.handleEdit}
           />
         )}
-        <StyledAppDiv>
+        <StyledAppDiv className="page-selector">
           {this.state.events.length > 2 && (
             <ReactPaginate
               pageCount={this.state.pageCount}
