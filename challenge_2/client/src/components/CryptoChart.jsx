@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Chart from 'chart.js';
 import { StyledChartWrapper, StyledP } from '../styles.js';
+import PropTypes from 'prop-types';
 
 class CryptoChart extends React.Component {
   constructor(props) {
@@ -86,5 +87,10 @@ class CryptoChart extends React.Component {
     );
   }
 }
+
+CryptoChart.propTypes = {
+  bpi: PropTypes.object,
+  dis: PropTypes.string
+};
 
 export default CryptoChart;

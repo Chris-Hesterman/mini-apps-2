@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import moment from 'moment';
 import { StyledForm, StyledInput, StyledButton } from '../styles.js';
+import PropTypes from 'prop-types';
 
 class RangeInput extends React.Component {
   constructor(props) {
@@ -52,5 +53,9 @@ class RangeInput extends React.Component {
     );
   }
 }
+
+RangeInput.propTypes = {
+  getRange: PropTypes.func
+};
 
 export default RangeInput;

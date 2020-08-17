@@ -39,14 +39,15 @@ class App extends React.Component {
 
   render() {
     return (
-      <StyledAppWrapper>
+      <StyledAppWrapper className={'app'}>
         <GlobalStyle />
         <StyledH1>Check Historic Bitcoin Value</StyledH1>
-        <RangeInput getRange={this.fetchData} />
+        <RangeInput getRange={this.fetchData} className="input" />
         {this.state.data.hasOwnProperty('bpi') && (
           <CryptoChart
             bpi={this.state.data.bpi}
             dis={this.state.data.disclaimer}
+            className="chart"
           />
         )}
       </StyledAppWrapper>
