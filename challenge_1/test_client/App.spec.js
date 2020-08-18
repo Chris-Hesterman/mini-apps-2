@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import checkPropTypes from 'check-prop-types';
 import Enzyme from 'enzyme';
 import { shallow, mount } from 'enzyme';
+import renderer from 'react-test-renderer';
 import Adapter from 'enzyme-adapter-react-16';
 import App from '../client/src/components/App/App.jsx';
 import List from '../client/src/components/List/List.jsx';
@@ -29,6 +30,12 @@ describe('App component', () => {
     expect(wrapper.length).toBe(1);
     expect(wrapper.length).toBeLessThan(2);
     expect(wrapper.length).toBeGreaterThan(0);
+  });
+
+  it('should render correctly', () => {
+    const tree = renderer.create('<App />').toJSON();
+
+    expect(tree).toMatchSnapshot();
   });
 
   it('should render a single List component', () => {

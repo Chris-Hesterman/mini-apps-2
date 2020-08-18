@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ListItem component Snapshot test should render correctly 1`] = `
+<div
+  className="ListItemcss__StyledListItem-sc-1lk54j5-0 gBfNCw"
+>
+  <h4
+    className="ListItemcss__StyledItemH4-sc-1lk54j5-1 eljxyj"
+  >
+    Year: 
+    -297
+  </h4>
+  <div
+    className="ListItemcss__StyledItemPWrapper-sc-1lk54j5-2 dhJpca"
+  >
+    <p
+      className="ListItemcss__StyledItemP-sc-1lk54j5-3 cItsBx"
+    >
+      Demetrius Poliorcetes returns to Greece with the aim of becoming master of Macedonia. While Demetrius is in Greece, Lysimachus seizes his possessions in Asia Minor.
+    </p>
+  </div>
+</div>
+`;

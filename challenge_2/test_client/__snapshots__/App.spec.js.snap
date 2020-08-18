@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[` 1`] = `
+"<styles__StyledAppWrapper className=\\"app\\">
+  <Memo(GlobalStyleComponent) />
+  <styles__StyledH1>
+    Check Historic Bitcoin Value
+  </styles__StyledH1>
+  <RangeInput getRange={[Function: bound fetchData]} className=\\"input\\" />
+</styles__StyledAppWrapper>"
+`;
+
+exports[`App renders one and only one CryptoChart component only when data is received 1`] = `
+"<styles__StyledAppWrapper className=\\"app\\">
+  <Memo(GlobalStyleComponent) />
+  <styles__StyledH1>
+    Check Historic Bitcoin Value
+  </styles__StyledH1>
+  <RangeInput getRange={[Function: bound fetchData]} className=\\"input\\" />
+  <CryptoChart bpi={{ '2018-02-22': 9830.4263, '2018-02-23': 10149.4625, '2018-02-24': 9682.3825 }} dis={[undefined]} className=\\"chart\\" />
+</styles__StyledAppWrapper>"
+`;

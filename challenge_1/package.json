@@ -39,6 +39,7 @@
     "jest-enzyme": "^7.1.2",
     "mockgoose": "^8.0.4",
     "nodemon": "^2.0.4",
+    "react-test-renderer": "^16.13.1",
     "superagent": "^6.0.0",
     "supertest": "^4.0.2",
     "webpack": "^4.44.1",

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import checkPropTypes from 'check-prop-types';
 import Enzyme from 'enzyme';
 import { shallow, mount } from 'enzyme';
+// import renderer from 'react-test-renderer';
 import Adapter from 'enzyme-adapter-react-16';
 import mockAxios from 'axios';
 import Chart from 'chart.js';
@@ -28,7 +29,7 @@ const response = {
 describe('App', () => {
   const wrapper = shallow(<App />);
 
-  it('Should render correctly', () => {
+  it('Should render', () => {
     expect(wrapper.find('.app').length).toBe(1);
   });
 
@@ -55,6 +56,11 @@ describe('App', () => {
     wrapper.setState({ data: response.data });
 
     expect(wrapper.find('.chart').length).toBe(1);
+    expect(wrapper.debug({ verbose: true })).toMatchSnapshot();
     expect(wrapper.find('.chart').length).toBeLessThan(2);
+  });
+
+  describe('Snapshot test with no state.data, no chart', () => {
+    expect(wrapper.debug({ verbose: true })).toMatchSnapshot();
   });
 });
