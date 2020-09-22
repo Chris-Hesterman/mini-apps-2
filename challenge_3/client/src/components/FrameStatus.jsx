@@ -1,11 +1,7 @@
 import React from 'react';
 
 const FrameStatus = (props) => {
-  return (
-    <div>
-      <p>first|second</p>
-    </div>
-  );
+  return <p>first|second</p>;
 };
 
 export default FrameStatus;
