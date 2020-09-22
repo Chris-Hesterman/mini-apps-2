@@ -1,4 +1,6 @@
 import React from 'react';
+import Pinpad from './Pinpad.jsx';
+import GameScore from './GameScore.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -9,7 +11,8 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <h1>Im the main component</h1>
+        <Pinpad />
+        <GameScore />
       </div>
     );
   }
