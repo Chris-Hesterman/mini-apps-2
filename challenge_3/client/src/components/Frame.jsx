@@ -20,10 +20,13 @@ class Frame extends React.Component {
 
   componentDidUpdate(prevProps) {
     const frameKey = this.props.frameNumber.toString();
+
     if (
       this.props.frames[frameKey].length !== prevProps.frames[frameKey].length
     ) {
-      this.setState({ status: this.props.frames[frameKey] });
+      this.setState((prevState) => {
+        return { status: this.props.frames[frameKey] };
+      });
     }
   }
 

@@ -20,15 +20,21 @@ class App extends React.Component {
     };
     this.addPins = this.addPins.bind(this);
     this.advanceFrame = this.advanceFrame.bind(this);
+    this.checkFrameLength = this.checkFrameLength.bind(this);
+  }
+
+  checkFrameLength() {
+    if (
+      this.state[this.state.currentFrame.toString()].length === 2 &&
+      this.state.frameNumber !== 10
+    ) {
+      this.advanceFrame();
+    }
   }
 
   addPins(numToppledPins) {
     console.log(numToppledPins);
     const frame = [...this.state[this.state.currentFrame.toString()]];
-
-    if (frame.length === 2) {
-      this.advanceFrame();
-    }
 
     if (!frame.length) {
       if (numToppledPins === 10) {
@@ -59,8 +65,17 @@ class App extends React.Component {
 
   advanceFrame() {
     this.setState((prevState) => {
-      return { currentFrame: (prevState.currentFrame += 1) };
+      return { currentFrame: prevState.currentFrame + 1 };
     });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      this.state[this.state.currentFrame.toString()].length !==
+      prevState[this.state.currentFrame.toString()].length
+    ) {
+      this.checkFrameLength();
+    }
   }
 
   render() {
