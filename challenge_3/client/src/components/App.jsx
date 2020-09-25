@@ -84,7 +84,10 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Pinpad throwBall={this.addPins} />
+        <Pinpad
+          throwBall={this.addPins}
+          currentStatus={this.state[this.state.currentFrame.toString()]}
+        />
         <GameScore frames={this.state} />
       </div>
     );

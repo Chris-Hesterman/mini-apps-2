@@ -7,9 +7,25 @@ class Frame extends React.Component {
     this.state = {
       status: [],
       currentFrameScore: null,
-      score: 123,
-      frameNumber: null
+      score: 0,
+      frameNumber: null,
+      prevScore: 0
     };
+    this.updateFrameScore = this.updateFrameScore.bind(this);
+  }
+
+  updateFrameScore() {
+    const key = this.props.frameNumber.toString();
+
+    if (
+      this.props.frames[key][0] !== 'X' &&
+      this.props.frames[key][1] !== '/'
+    ) {
+      const score = this.props.frames[key][0] + this.props.frames[key][1];
+      console.log('updating score', score);
+
+      this.setState({ score: score });
+    }
   }
 
   componentDidMount() {
@@ -27,6 +43,12 @@ class Frame extends React.Component {
       this.setState((prevState) => {
         return { status: this.props.frames[frameKey] };
       });
+    }
+    if (
+      this.props.frames[frameKey].length === 2 &&
+      prevProps.frames[frameKey].length === 1
+    ) {
+      this.updateFrameScore();
     }
   }
 
@@ -48,11 +70,18 @@ class Frame extends React.Component {
         <tbody>
           <tr>
             <td>
-              <h2>{this.state.score}</h2>
+              <h2>{this.state.score > 0 ? this.state.score : ' - - '}</h2>
             </td>
           </tr>
           <tr>
-            <td>frame: {this.props.frameNumber}</td>
+            <td>
+              frame:{' '}
+              {this.state.frameNumber === this.props.frames.currentFrame ? (
+                <h3>{this.props.frameNumber}</h3>
+              ) : (
+                <p>{this.props.frameNumber}</p>
+              )}
+            </td>
           </tr>
         </tbody>
       </table>
