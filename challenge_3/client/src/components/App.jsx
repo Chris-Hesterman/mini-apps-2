@@ -6,6 +6,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      currentTotal: 0,
       currentFrame: 1,
       1: [],
       2: [],
@@ -20,7 +21,14 @@ class App extends React.Component {
     };
     this.addPins = this.addPins.bind(this);
     this.advanceFrame = this.advanceFrame.bind(this);
+    this.retrieveScore = this.retrieveScore.bind(this);
     this.checkFrameLength = this.checkFrameLength.bind(this);
+  }
+
+  retrieveScore(num) {
+    this.setState((prevState) => {
+      return { currentTotal: (prevState.currentTotal += num) };
+    });
   }
 
   checkFrameLength() {
@@ -39,7 +47,7 @@ class App extends React.Component {
     if (!frame.length) {
       console.log('no frame length');
       if (numToppledPins === 10) {
-        frame.push('X');
+        frame.push(10);
         console.log(frame);
         this.setState((prevState) => {
           return { [this.state.currentFrame.toString()]: frame };
@@ -49,7 +57,7 @@ class App extends React.Component {
     }
 
     if (frame[0] + numToppledPins === 10) {
-      frame.push('/');
+      frame.push(10 - frame[0]);
       console.log(frame);
       this.setState((prevState) => {
         return { [this.state.currentFrame.toString()]: frame };
@@ -59,7 +67,6 @@ class App extends React.Component {
 
     if (frame.length < 2) {
       frame.push(numToppledPins);
-      console.log(frame);
       this.setState({ [this.state.currentFrame.toString()]: frame });
 
       return;
@@ -88,7 +95,7 @@ class App extends React.Component {
           throwBall={this.addPins}
           currentStatus={this.state[this.state.currentFrame.toString()]}
         />
-        <GameScore frames={this.state} />
+        <GameScore frames={this.state} sendScore={this.retrieveScore} />
       </div>
     );
   }
