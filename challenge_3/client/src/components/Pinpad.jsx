@@ -9,6 +9,7 @@ class Pinpad extends React.Component {
   }
 
   handleClick(e) {
+    console.log('throw');
     this.props.throwBall(+e.target.textContent);
   }
 

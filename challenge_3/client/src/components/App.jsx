@@ -37,11 +37,13 @@ class App extends React.Component {
     const frame = [...this.state[this.state.currentFrame.toString()]];
 
     if (!frame.length) {
+      console.log('no frame length');
       if (numToppledPins === 10) {
         frame.push('X');
         console.log(frame);
-        this.setState({ frame });
-
+        this.setState((prevState) => {
+          return { [this.state.currentFrame.toString()]: frame };
+        }, this.advanceFrame());
         return;
       }
     }
@@ -49,8 +51,9 @@ class App extends React.Component {
     if (frame[0] + numToppledPins === 10) {
       frame.push('/');
       console.log(frame);
-      this.setState({ frame });
-
+      this.setState((prevState) => {
+        return { [this.state.currentFrame.toString()]: frame };
+      }, this.advanceFrame());
       return;
     }
 
