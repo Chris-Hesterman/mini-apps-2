@@ -7,6 +7,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       currentFrame: 1,
+      prevFrameScore: 0,
       1: [],
       2: [],
       3: [],
@@ -25,9 +26,7 @@ class App extends React.Component {
     this.checkFrameLength = this.checkFrameLength.bind(this);
   }
 
-  retrieveScore(num) {
-    // const scores = this.state.scores.slice();
-    // scores.push(num);
+  retrieveScore(num, frame) {
     this.setState((prevState) => {
       return { total: (prevState.total += num) };
     });
