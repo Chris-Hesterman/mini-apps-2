@@ -6,7 +6,6 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentTotal: 0,
       currentFrame: 1,
       1: [],
       2: [],
@@ -17,7 +16,8 @@ class App extends React.Component {
       7: [],
       8: [],
       9: [],
-      10: []
+      10: [],
+      total: 0
     };
     this.addPins = this.addPins.bind(this);
     this.advanceFrame = this.advanceFrame.bind(this);
@@ -26,8 +26,10 @@ class App extends React.Component {
   }
 
   retrieveScore(num) {
+    // const scores = this.state.scores.slice();
+    // scores.push(num);
     this.setState((prevState) => {
-      return { currentTotal: (prevState.currentTotal += num) };
+      return { total: (prevState.total += num) };
     });
   }
 
@@ -95,7 +97,11 @@ class App extends React.Component {
           throwBall={this.addPins}
           currentStatus={this.state[this.state.currentFrame.toString()]}
         />
-        <GameScore frames={this.state} sendScore={this.retrieveScore} />
+        <GameScore
+          frames={this.state}
+          sendScore={this.retrieveScore}
+          tally={this.state.total}
+        />
       </div>
     );
   }

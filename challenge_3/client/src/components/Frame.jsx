@@ -13,8 +13,6 @@ class Frame extends React.Component {
       spare: false
     };
     this.updateFrameScore = this.updateFrameScore.bind(this);
-    this.handleStrike = this.handleStrike.bind(this);
-    this.handleSpare = this.handleSpare.bind(this);
   }
 
   updateFrameScore() {
@@ -37,47 +35,6 @@ class Frame extends React.Component {
       });
       this.props.sendScore(score);
     }
-
-    if (this.props.frames[key][0] === 10) {
-      this.setState({ currentFrameScore: 10 });
-
-      // const frameKeyNext =
-      //   this.state.frameNumber < 10
-      //     ? (this.props.frameNumber + 1).toString()
-      //     : null;
-      // const statusNext = this.props.frames[frameKeyNext];
-      // console.log('statusNext', statusNext);
-
-      // if (statusNext && statusNext.length === 2) {
-      //   const bonus = statusNext[0] + statusNext[1];
-      //   this.setState({ score: bonus + 10, currentFrameScore: bonus + 10 });
-      // }
-    }
-
-    if (
-      this.props.frames[key][0] + this.props.frames[key][1] === 10 &&
-      this.props.frames[1] !== 0
-    ) {
-      this.handleSpare();
-    }
-  }
-
-  handleStrike() {
-    console.log('handleStrike');
-    this.setState({ currentFrameScore: 10 });
-
-    // const statusNext = this.props.frames[
-    //   (this.props.frameNumber + 1).toString()
-    // ];
-    // console.log(statusNext);
-    // if (statusNext && statusNext.length === 2) {
-    //   const bonus = statusNext[0] + statusNext[1];
-    //   this.setState({ score: bonus + 10, currentFrameScore: bonus + 10 });
-    // }
-  }
-
-  handleSpare() {
-    console.log('handleSpare');
   }
 
   componentDidMount() {
@@ -92,6 +49,10 @@ class Frame extends React.Component {
       this.state.frameNumber < 10
         ? (this.props.frameNumber + 1).toString()
         : null;
+    const frameKeyNextNext =
+      this.state.frameNumber < 9
+        ? (this.props.frameNumber + 2).toString()
+        : null;
 
     if (
       this.props.frames[frameKey].length !== prevProps.frames[frameKey].length
@@ -101,6 +62,12 @@ class Frame extends React.Component {
           { status: this.props.frames[frameKey], strike: true },
           this.updateFrameScore()
         );
+        return;
+      } else if (
+        this.props.frames[frameKey][0] + this.props.frames[frameKey][1] ===
+        10
+      ) {
+        this.setState({ status: this.props.frames[frameKey], spare: true });
       } else {
         this.setState((prevState) => {
           return { status: this.props.frames[frameKey] };
@@ -109,7 +76,6 @@ class Frame extends React.Component {
     }
 
     if (this.props.frames[frameKeyNext] !== prevProps.frames[frameKeyNext]) {
-      console.log(this.props.frames[frameKeyNext]);
       if (prevState.strike && this.props.frames[frameKeyNext].length === 2) {
         const bonus =
           this.props.frames[frameKeyNext][0] +
@@ -119,29 +85,24 @@ class Frame extends React.Component {
             currentFrameScore: 10 + bonus,
             score: bonus + 10
           };
-        }, this.props.sendScore(bonus));
+        });
+        this.updateFrameScore();
+      }
+
+      if (prevState.strike && this.props.frames[[frameKeyNext][0] === 10]) {
+      }
+
+      if (prevState.spare && this.props.frames[frameKeyNext].length === 1) {
+        const bonus = this.props.frames[frameKeyNext][0];
+        this.setState((prevState) => {
+          return {
+            currentFrameScore: 10 + bonus,
+            score: bonus + 10
+          };
+        });
         this.updateFrameScore();
       }
     }
-
-    // if (
-    //   this.props.frames[frameKey].length === 2 &&
-    //   prevProps.frames[frameKey].length === 1
-    // ) {
-    //   this.updateFrameScore();
-    // }
-    // if (
-    //   frameKeyNext &&
-    //   this.props.frames[frameKeyNext].length !==
-    //     prevProps.frames[frameKeyNext].length
-    // ) {
-    //   if (this.state.strike) {
-    //     this.handleStrike();
-    //   }
-    //   if (this.state.spare) {
-    //     this.handleSpare();
-    //   }
-    // }
   }
 
   render() {
@@ -169,7 +130,7 @@ class Frame extends React.Component {
             <td>
               frame:{' '}
               {this.state.frameNumber === this.props.frames.currentFrame ? (
-                <h3>{this.props.frameNumber}</h3>
+                <p>{`> ${this.props.frameNumber} <`}</p>
               ) : (
                 <p>{this.props.frameNumber}</p>
               )}
