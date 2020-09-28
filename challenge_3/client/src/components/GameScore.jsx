@@ -11,8 +11,6 @@ const GameScore = (props) => {
           key={i}
           frameNumber={i}
           currentFrame={props.frames.currentFrame}
-          sendScore={props.sendScore}
-          tally={props.tally}
         />
       </td>
     );
