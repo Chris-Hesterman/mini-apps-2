@@ -1,0 +1,12 @@
+.Square {
+  background: plum;
+  width: 66px;
+  height: 66px;
+  margin: 2px;
+  box-shadow: 1px 1px 2px black;
+}
+
+.Square:active {
+  box-shadow: none;
+  transform: translate(1px, 1px);
+}
