@@ -3,8 +3,8 @@ import './Square.css';
 
 function Square(props) {
   return (
-    <div className="Square" value={props.place}>
-      <p onClick={props.clickHandler}>square</p>
+    <div className="Square" data-number={props.number}>
+      <p>square</p>
     </div>
   );
 }
