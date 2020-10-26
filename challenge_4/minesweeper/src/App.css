@@ -1,0 +1,14 @@
+.App {
+  text-align: center;
+  width: 800px;
+  height: 800px;
+  background: yellow;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+h1 {
+  margin-top: 0;
+}
