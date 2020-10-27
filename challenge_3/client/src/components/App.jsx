@@ -21,19 +21,16 @@ class App extends React.Component {
     };
     this.addPins = this.addPins.bind(this);
     this.advanceFrame = this.advanceFrame.bind(this);
-    this.calculateScores = this.calculateScores.bind(this);
+    this.checkScores = this.checkScores.bind(this);
   }
 
-  calculateScores() {
-    // let scores = [];
-    // console.log('calc');
-    // for (let i = 1; i < 11; i++) {
-    //   const frame = this.state[i.toString()];
-    //   console.log('frame', frame);
-    //   if (frame.length === 2 && frame[0] + frame[1] < 10) {
-    //     scores.push(frame[0] + frame[1]);
-    //   }
-    // }
+  checkScores() {
+    let scores = this.state.scores.slice();
+
+    console.log(this.state['1']);
+    console.log(scores);
+
+    this.setState({ scores: scores });
   }
 
   addPins(numToppledPins) {
@@ -43,7 +40,7 @@ class App extends React.Component {
 
     if (!frame.length) {
       if (numToppledPins === 10) {
-        scores.push('strike');
+        scores.push(['strike', 10]);
         frame.push(10);
         this.setState((prevState) => {
           return {
@@ -63,7 +60,7 @@ class App extends React.Component {
     } else {
       frame.push(numToppledPins);
       if (frame[0] + frame[1] === 10) {
-        scores.push('spare');
+        scores.push(['spare', 10]);
       } else if (typeof scores[scores.length - 1] === 'number') {
         scores.push(frame[0] + frame[1] + scores[scores.length - 1]);
       } else {
@@ -80,7 +77,7 @@ class App extends React.Component {
       this.state.currentFrame < 10 ? this.state.currentFrame + 1 : null;
     this.setState((prevState) => {
       return { currentFrame: nextFrame };
-    });
+    }, this.checkScores());
   }
 
   render() {
