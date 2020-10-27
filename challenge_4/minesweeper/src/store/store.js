@@ -4,7 +4,6 @@ import squareReducer from '../features/square/squareReducer';
 
 export default configureStore({
   reducer: {
-    board: boardReducer,
-    square: squareReducer
+    board: boardReducer
   }
 });
