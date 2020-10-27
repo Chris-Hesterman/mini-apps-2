@@ -10,3 +10,19 @@
   box-shadow: none;
   transform: translate(1px, 1px);
 }
+
+.Square-uncovered {
+  box-shadow: none;
+  background: tan;
+  color: black;
+}
+
+.Square-flagged {
+  background: url('../../flagAnim.gif');
+  background-size: 66px 66px;
+}
+
+.Square-mine {
+  background: url('../../mine.gif'), linear-gradient(to right, red, red);
+  background-size: 66px 66px;
+}

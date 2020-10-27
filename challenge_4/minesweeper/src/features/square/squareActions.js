@@ -1,8 +1,8 @@
-const squareHasBeenClicked = (num) => {
-  return {
-    type: 'SQUARE_CLICKED',
-    number: num
-  };
-};
+// const handleClickedSquare = (e) => {
+//   return {
+//     type: 'SQUARE_CLICKED',
+//     number: e.target.dataset.number
+//   };
+// };
 
-export default squareHasBeenClicked;
+// export default handleClickedSquare;
