@@ -7,6 +7,7 @@ const GameScore = (props) => {
     frameUnits.push(
       <td key={i}>
         <Frame
+          score={props.frames.scores[i - 1] || null}
           frames={props.frames}
           key={i}
           frameNumber={i}
