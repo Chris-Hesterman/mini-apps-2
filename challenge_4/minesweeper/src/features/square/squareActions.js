@@ -1,8 +1,8 @@
-// const handleClickedSquare = (e) => {
-//   return {
-//     type: 'SQUARE_CLICKED',
-//     number: e.target.dataset.number
-//   };
-// };
+const uncoverAdjacentEmpty = (number) => {
+  return {
+    type: 'UNCOVER_ADJ_EMPTY',
+    number: number
+  };
+};
 
-// export default handleClickedSquare;
+export default uncoverAdjacentEmpty;

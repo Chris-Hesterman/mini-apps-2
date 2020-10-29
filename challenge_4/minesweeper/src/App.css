@@ -2,7 +2,9 @@
   text-align: center;
   width: 800px;
   height: 800px;
-  background: yellow;
+  color: greenyellow;
+  text-shadow: 1px 1px black, -1px 1px black, -1px -1px black, 1px -1px black;
+  letter-spacing: 3px;
   display: flex;
   flex-direction: column;
   justify-content: center;

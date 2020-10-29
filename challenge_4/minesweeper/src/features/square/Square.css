@@ -1,9 +1,16 @@
 .Square {
-  background: plum;
+  background: lightblue;
+  font-size: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 66px;
   height: 66px;
   margin: 2px;
   box-shadow: 1px 1px 2px black;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border: 1px solid grey;
 }
 
 .Square:active {
@@ -12,8 +19,8 @@
 }
 
 .Square-uncovered {
-  box-shadow: none;
-  background: tan;
+  background: url('../../water2.gif');
+  background-size: 66px 66px;
   color: black;
 }
 
@@ -24,5 +31,21 @@
 
 .Square-mine {
   background: url('../../mine.gif'), linear-gradient(to right, red, red);
-  background-size: 66px 66px;
+  background-size: 64px 64px;
+}
+
+.Square-adjacent-none {
+  color: green;
+}
+
+.Square-adjacent-one {
+  color: yellow;
+}
+
+.Square-adjacent-two {
+  color: orange;
+}
+
+.Square-adjacent-three {
+  color: red;
 }

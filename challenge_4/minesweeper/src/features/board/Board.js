@@ -6,19 +6,18 @@ import './Board.css';
 import SquareContainer from '../square/Square.js';
 
 function Board(props) {
-  const state = store.getState();
   const squares = [];
   for (let i = 1; i < 101; i++) {
     squares.push(<SquareContainer key={i} number={i} />);
   }
 
   const handleClick = (e) => {
-    props.handleClick(e.target.dataset['number']);
+    props.handleClick(+e.target.dataset['number']);
   };
 
   const handleFlag = (e) => {
     e.preventDefault();
-    props.handleFlag(e.target.dataset['number']);
+    props.handleFlag(+e.target.dataset['number']);
   };
   return (
     <div className="Board" onClick={handleClick} onContextMenu={handleFlag}>
@@ -26,6 +25,7 @@ function Board(props) {
     </div>
   );
 }
+
 const mapStateToProps = (state, ownProps) => {
   return {};
 };
