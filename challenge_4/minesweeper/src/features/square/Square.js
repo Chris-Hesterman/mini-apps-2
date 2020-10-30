@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import uncoverBonus from './squareActions';
+import { uncoverEntireBonus, buildAdjacent } from '../../uncoverEntireBonus.js';
 import store from '../../store/store.js';
 import checkAdjacent from '../../checkAdjacent.js';
 import './Square.css';
@@ -8,6 +10,7 @@ function Square(props) {
   let num = props.number;
   let newClassName;
   const adjacent = checkAdjacent(props.number, props.mines);
+  let safeZone = new Set();
 
   if (props.uncovered.includes(props.number)) {
     if (
@@ -28,34 +31,40 @@ function Square(props) {
       console.log('flagged');
       newClassName = 'Square-flagged';
     }
-    const helper = (num, bonus) => {
-      let adjArray = [num - 10, num + 10];
 
-      if (!num % 10 === 0) {
-        adjArray.push(num + 1, num - 9, +11);
-      }
+    // const buildAdjacent = (num) => {
+    //   let adjArray = [num - 10, num + 10];
 
-      if (!num % 10 === 1) {
-        adjArray.push(num - 1, num + 9, num - 11);
-      }
+    //   if (num % 10 !== 0 && num % 10 !== 1) {
+    //     adjArray.push(num - 1, num + 1, num - 9, num + 9, num - 11, num + 11);
+    //   }
 
-      const result = adjArray.filter((num) => {
-        if (
-          !props.mines.includes(num) &&
-          checkAdjacent(num, props.mines) === 0
-        ) {
-          if (num > 0 && num < 101) {
-            return num;
-          }
-        }
-      });
+    //   if (num % 10 === 1) {
+    //     adjArray.push(num + 1, num - 9, num + 11);
+    //   }
 
-      return result;
-    };
-    if (adjacent === 0) {
-      // console.log(helper(props.uncovered[props.uncovered.length - 1], []));
-      console.log(helper(props.number, props.mines));
-    }
+    //   if (num % 10 === 0) {
+    //     adjArray.push(num + 9, num - 1, num - 11);
+    //   }
+
+    //   adjArray = adjArray.filter((num) => {
+    //     if (num > 0 && num < 101) {
+    //       return num;
+    //     }
+    //   });
+
+    //   return adjArray;
+    // };
+    // maybe take this completely out of component8=*****************************
+    // if (adjacent === 0) {
+    //   const totalBonus = uncoverEntireBonus(
+    //     props.number,
+    //     props.uncovered,
+    //     props.mines
+    //   );
+
+    // props.revealBonus(newUncovered);
+    //}
   }
 
   return (
@@ -88,12 +97,12 @@ const mapStateToProps = (state) => {
     flags: state.board.flags
   };
 };
-// const mapdDispatchToProps = (dispatch, ownProps) => {
-//   return {
-//     uncoverBonus: (arg) => dispatch(uncoverAdjacentEmpty(arg))
-//   };
-// };
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    revealBonus: (arg) => dispatch(uncoverBonus(arg))
+  };
+};
 
-const SquareContainer = connect(mapStateToProps)(Square);
+const SquareContainer = connect(mapStateToProps, mapDispatchToProps)(Square);
 
 export default SquareContainer;

@@ -26,6 +26,9 @@ const checkAdjacent = (currentSquare, minesArray) => {
     if (minesArray.includes(currentSquare + 9)) {
       numberAdjacent--;
     }
+    if (minesArray.includes(currentSquare - 11)) {
+      numberAdjacent--;
+    }
   }
 
   return numberAdjacent;

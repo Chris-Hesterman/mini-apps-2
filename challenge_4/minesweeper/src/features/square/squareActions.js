@@ -1,8 +1,8 @@
-const uncoverAdjacentEmpty = (number) => {
+const uncoverBonus = (array) => {
   return {
-    type: 'UNCOVER_ADJ_EMPTY',
-    number: number
+    type: 'UNCOVER_BONUS',
+    array: array
   };
 };
 
-export default uncoverAdjacentEmpty;
+export default uncoverBonus;
