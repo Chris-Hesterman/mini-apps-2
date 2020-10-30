@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import store from '../../store/store.js';
 import { handleClickedSquare, handleFlaggedSquare } from './boardActions.js';
 import './Board.css';
 import SquareContainer from '../square/Square.js';

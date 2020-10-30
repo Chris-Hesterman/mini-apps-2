@@ -19,18 +19,18 @@
 }
 
 .Square-uncovered {
-  background: url('../../water2.gif');
+  background: url('../../images/water2.gif');
   background-size: 66px 66px;
   color: black;
 }
 
 .Square-flagged {
-  background: url('../../flagAnim.gif');
+  background: url('../../images/flagAnim.gif');
   background-size: 66px 66px;
 }
 
 .Square-mine {
-  background: url('../../mine.gif'), linear-gradient(to right, red, red);
+  background: url('../../images/mine.gif'), linear-gradient(to right, red, red);
   background-size: 64px 64px;
 }
 
