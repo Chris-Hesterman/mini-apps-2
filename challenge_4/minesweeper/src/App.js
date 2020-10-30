@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import store from './store/store.js';
+// import store from './store/store.js';
 import './App.css';
 import BoardContainer from './features/board/Board.js';
 

@@ -1,6 +1,6 @@
-import { checkWin, checkLose } from '../../checkWinLose.js';
-import checkAdjacent from '../../checkAdjacent.js';
-import { uncoverEntireBonus } from '../../uncoverEntireBonus.js';
+import { checkWin, checkLose } from '../../utils/checkWinLose.js';
+import checkAdjacent from '../../utils/checkAdjacent.js';
+import { uncoverEntireBonus } from '../../utils/uncoverEntireBonus.js';
 
 const generateState = () => {
   const initialState = {

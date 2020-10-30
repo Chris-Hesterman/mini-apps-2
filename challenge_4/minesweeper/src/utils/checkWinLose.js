@@ -1,7 +1,4 @@
 export const checkWin = (uncovered, mines) => {
-  const located = mines.every((mine) => {
-    return !uncovered.has(mine);
-  });
   if (uncovered.size === 100 - mines.length) {
     return true;
   }
