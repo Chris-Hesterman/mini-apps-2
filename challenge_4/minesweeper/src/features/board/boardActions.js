@@ -1,5 +1,4 @@
 export const handleClickedSquare = (number) => {
-  console.log(number);
   return {
     type: 'SQUARE_CLICKED',
     number: number

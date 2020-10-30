@@ -1,10 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
-// import store from './store/store.js';
 import './App.css';
 import BoardContainer from './features/board/Board.js';
 
 const App = (props) => {
+  let newClassName;
+  if (props.board.winner) {
+    newClassName = 'App-winner';
+  }
+  if (props.board.loser) {
+    newClassName = 'App-loser';
+  }
   const titleMessage = props.board.winner
     ? 'WINNER!'
     : props.board.loser
@@ -12,7 +18,7 @@ const App = (props) => {
     : 'MINESWEEPER';
 
   return (
-    <div className="App">
+    <div className={`App ${newClassName ? newClassName : ''}`}>
       <h1>{titleMessage}</h1>
       <BoardContainer />
     </div>

@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import uncoverBonus from './squareActions';
 import checkAdjacent from '../../utils/checkAdjacent.js';
 import './Square.css';
 
@@ -13,7 +12,6 @@ function Square(props) {
       props.mines.includes(props.number) &&
       !props.flags.includes(props.number)
     ) {
-      console.log('mine');
       newClassName = 'Square-mine';
     }
 
@@ -24,7 +22,6 @@ function Square(props) {
     ) {
       newClassName = 'Square-uncovered';
     } else if (props.flags.includes(props.number) && !newClassName) {
-      console.log('flagged');
       newClassName = 'Square-flagged';
     }
   }
@@ -59,12 +56,7 @@ const mapStateToProps = (state) => {
     flags: state.board.flags
   };
 };
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    revealBonus: (arg) => dispatch(uncoverBonus(arg))
-  };
-};
 
-const SquareContainer = connect(mapStateToProps, mapDispatchToProps)(Square);
+const SquareContainer = connect(mapStateToProps)(Square);
 
 export default SquareContainer;

@@ -1,7 +1,10 @@
 .App {
   text-align: center;
-  width: 800px;
-  height: 800px;
+  height: 100vh;
+  width: 100vw;
+  background-image: url('./images/mines1.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
   color: greenyellow;
   text-shadow: 1px 1px black, -1px 1px black, -1px -1px black, 1px -1px black;
   letter-spacing: 3px;
@@ -13,4 +16,21 @@
 
 h1 {
   margin-top: 0;
+}
+
+.App-loser {
+  background-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.5),
+      rgba(255, 0, 0, 0.7)
+    ),
+    url('./images/mines1.jpg');
+}
+.App-winner {
+  background-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0),
+      rgba(0, 255, 0, 0.7)
+    ),
+    url('./images/mines1.jpg');
 }
