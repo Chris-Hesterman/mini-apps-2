@@ -7,25 +7,7 @@ class Frame extends React.Component {
     this.state = {
       frameNumber: 1
     };
-    // this.checkScore = this.checkScore.bind(this);
   }
-
-  // checkScore() {
-  //   let scores = this.props.frames.scores;
-
-  //   if (this.props.score === 'strike') {
-  //     for (let score = 0; score < scores.lenght; score++) {
-  //       if (score === 'strike') {
-  //         if (scores[score + 1] === 'spare') {
-  //           scores[score] = 20 + scores[score - 1];
-  //         }
-  //         this.setState({ scores: scores });
-  //       }
-  //       if (score === 'spare') {
-  //       }
-  //     }
-  //   }
-  // }
 
   componentDidMount() {
     this.setState({
@@ -52,6 +34,7 @@ class Frame extends React.Component {
           <tr>
             <td>
               <h2>
+                {}
                 {typeof this.props.score !== 'number'
                   ? ' - - '
                   : this.props.score}
