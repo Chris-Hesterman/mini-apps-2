@@ -2,7 +2,6 @@ export const checkWin = (uncovered, mines) => {
   if (uncovered.size === 100 - mines.length) {
     return true;
   }
-
   return false;
 };
 
