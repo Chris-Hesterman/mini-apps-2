@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js",
+    "startPack": "webpack serve --open chrome",
     "build": "webpack -d --watch"
   },
   "author": "Chris Hesterman",
@@ -14,18 +15,20 @@
     "axios": "^0.20.0",
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
-    "nodemon": "^2.0.4",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.11.0",
-    "@babel/preset-env": "^7.11.0",
-    "@babel/preset-react": "^7.10.4",
+    "@babel/core": "^7.12.3",
+    "@babel/preset-env": "^7.12.1",
+    "@babel/preset-react": "^7.12.5",
+    "@webpack-cli/serve": "^1.1.0",
     "babel-cli": "^6.26.0",
     "babel-loader": "^8.1.0",
-    "nodemon": "^2.0.4",
-    "webpack": "^4.44.1",
-    "webpack-cli": "^3.3.12"
+    "nodemon": "^2.0.6",
+    "react-hot-loader": "^4.13.0",
+    "webpack": "^5.4.0",
+    "webpack-cli": "^4.2.0",
+    "webpack-dev-server": "^3.11.0"
   }
 }
