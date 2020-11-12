@@ -41,35 +41,67 @@ class App extends React.Component {
   }
 
   updateStrikeBonus(numberOfPins, prevScore) {
-    let newStrikeScore;
+    let newStrikeScore = [];
+    const scores = this.state.scores;
     const currFrame = this.state[`${this.state.currentFrame}`];
     const prevFrame = this.state[`${this.state.currentFrame - 1}`];
     const nextFrame = this.state[`${this.state.currentFrame + 1}`];
 
     console.log('currFrame', currFrame);
-    console.log('numpins', numberOfPins);
-
-    if (prevFrame && prevFrame[0] === 'strike') {
-      console.log('strikezone', currFrame);
-
-      if (currFrame && currFrame.length === 1) {
-        console.log('not strike');
-        newStrikeScore = 10 + currFrame[0] + numberOfPins;
-        console.log('newscore', newStrikeScore);
-        newStrikeScore =
-          this.state.currentFrame > 2
-            ? newStrikeScore + prevScore
-            : newStrikeScore;
-      }
+    console.log('frame', this.state.currentFrame);
+    // if (scores.length + 4 + newStrikeScore.length < this.state.currentFrame) {
+    //   console.log('add 30');
+    // }
+    while (
+      scores.length + 4 + newStrikeScore.length <=
+      this.state.currentFrame
+    ) {
+      console.log('add 30!');
+      let newScore = newStrikeScore.length
+        ? 30 + newStrikeScore[newStrikeScore.length - 1]
+        : prevScore
+        ? 30 + prevScore
+        : 30;
+      newStrikeScore.push(newScore);
     }
-
-    console.log('newStrikeScore', newStrikeScore);
+    if (scores.length + 4 === this.state.currentFrame) {
+      let newScore = prevScore ? 30 + prevScore : 30;
+      newStrikeScore.push(newScore);
+    }
+    if (
+      scores.length + 3 + newStrikeScore.length === this.state.currentFrame &&
+      currFrame[0]
+    ) {
+      let newScore = newStrikeScore.length
+        ? 20 + currFrame[0] + newStrikeScore[newStrikeScore.length - 1]
+        : prevScore
+        ? 20 + currFrame[0] + prevScore
+        : 20 + currFrame[0];
+      newStrikeScore.push(newScore);
+    }
+    if (
+      this.state.currentFrame === scores.length + 2 + newStrikeScore.length &&
+      currFrame.length === 1 &&
+      prevFrame &&
+      prevFrame[0] === 'strike'
+    ) {
+      let newScore = newStrikeScore.length
+        ? 10 +
+          currFrame[0] +
+          numberOfPins +
+          newStrikeScore[newStrikeScore.length - 1]
+        : prevScore
+        ? 10 + currFrame[0] + numberOfPins + prevScore
+        : 10 + currFrame[0] + numberOfPins;
+      newStrikeScore.push(newScore);
+    }
+    console.log(newStrikeScore);
     return newStrikeScore;
   }
 
   addPins(numToppledPins) {
     const frame = [...this.state[`${this.state.currentFrame}`]];
-    const scores = this.state.scores.slice();
+    let scores = this.state.scores.slice();
     let total = this.state.total;
     const spareBonus = this.updateSpareBonus(
       numToppledPins,
@@ -86,8 +118,8 @@ class App extends React.Component {
       if (spareBonus) {
         scores.push(spareBonus);
       }
-      if (typeof strikeBonus === 'number') {
-        scores.push(strikeBonus);
+      if (strikeBonus && strikeBonus.length) {
+        scores = scores.concat(strikeBonus);
       }
       if (numToppledPins === 10) {
         frame.push('strike', 10);
@@ -98,9 +130,8 @@ class App extends React.Component {
           };
         }, this.advanceFrame());
       } else {
-        console.log('Should come second');
-        if (typeof strikeBonus === 'number') {
-          scores.push(strikeBonus);
+        if (strikeBonus && strikeBonus.length) {
+          scores = scores.concat(strikeBonus);
         }
         frame.push(numToppledPins);
         this.setState({
@@ -109,8 +140,8 @@ class App extends React.Component {
         });
       }
     } else {
-      if (typeof strikeBonus === 'number') {
-        scores.push(strikeBonus);
+      if (strikeBonus && strikeBonus.length) {
+        scores = scores.concat(strikeBonus);
       }
       frame.push(numToppledPins);
       if (frame[0] + frame[1] === 10) {
