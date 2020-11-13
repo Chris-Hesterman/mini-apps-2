@@ -17,7 +17,7 @@ class App extends React.Component {
       8: [],
       9: [],
       10: [],
-      bonusFrames: [],
+      gameOver: false,
       scores: []
     };
     this.addPins = this.addPins.bind(this);
@@ -45,18 +45,15 @@ class App extends React.Component {
     const scores = this.state.scores;
     const currFrame = this.state[`${this.state.currentFrame}`];
     const prevFrame = this.state[`${this.state.currentFrame - 1}`];
-    const nextFrame = this.state[`${this.state.currentFrame + 1}`];
+    // const nextFrame = this.state[`${this.state.currentFrame + 1}`];
 
     console.log('currFrame', currFrame);
     console.log('frame', this.state.currentFrame);
-    // if (scores.length + 4 + newStrikeScore.length < this.state.currentFrame) {
-    //   console.log('add 30');
-    // }
+
     while (
-      scores.length + 4 + newStrikeScore.length <=
-      this.state.currentFrame
+      scores.length + 3 + newStrikeScore.length <= this.state.currentFrame &&
+      numberOfPins === 10
     ) {
-      console.log('add 30!');
       let newScore = newStrikeScore.length
         ? 30 + newStrikeScore[newStrikeScore.length - 1]
         : prevScore
@@ -64,10 +61,7 @@ class App extends React.Component {
         : 30;
       newStrikeScore.push(newScore);
     }
-    if (scores.length + 4 === this.state.currentFrame) {
-      let newScore = prevScore ? 30 + prevScore : 30;
-      newStrikeScore.push(newScore);
-    }
+
     if (
       scores.length + 3 + newStrikeScore.length === this.state.currentFrame &&
       currFrame[0]
@@ -95,26 +89,23 @@ class App extends React.Component {
         : 10 + currFrame[0] + numberOfPins;
       newStrikeScore.push(newScore);
     }
-    console.log(newStrikeScore);
+    console.log('newStrikeScore', newStrikeScore);
     return newStrikeScore;
   }
 
   addPins(numToppledPins) {
     const frame = [...this.state[`${this.state.currentFrame}`]];
     let scores = this.state.scores.slice();
-    let total = this.state.total;
     const spareBonus = this.updateSpareBonus(
       numToppledPins,
       this.state.scores[scores.length - 1]
     );
-    const strikeBonus = this.state[`${this.state.currentFrame}`].length
-      ? this.updateStrikeBonus(
-          numToppledPins,
-          this.state.scores[scores.length - 1]
-        )
-      : null;
+    const strikeBonus = this.updateStrikeBonus(
+      numToppledPins,
+      this.state.scores[scores.length - 1]
+    );
 
-    if (!frame.length) {
+    if (!frame.length && this.state.currentFrame !== 10) {
       if (spareBonus) {
         scores.push(spareBonus);
       }
@@ -139,12 +130,13 @@ class App extends React.Component {
           scores
         });
       }
-    } else {
+    } else if (this.state.currentFrame !== 10) {
       if (strikeBonus && strikeBonus.length) {
         scores = scores.concat(strikeBonus);
       }
       frame.push(numToppledPins);
-      if (frame[0] + frame[1] === 10) {
+
+      if (frame[0] + frame[1] === 10 && this.state.currentFrame !== 10) {
         frame.unshift('spare');
       } else {
         scores.push(
@@ -155,11 +147,59 @@ class App extends React.Component {
         return { [`${this.state.currentFrame}`]: frame, scores };
       }, this.advanceFrame());
     }
+
+    if (this.state.currentFrame === 10) {
+      console.log('tenframestrike', strikeBonus);
+      const prevScore = scores[scores.length - 1];
+
+      if (frame.length === 0) {
+        if (spareBonus) {
+          scores.push(spareBonus);
+        }
+        if (strikeBonus && strikeBonus.length) {
+          console.log('This is strike bonus');
+          scores = scores.concat(strikeBonus);
+        }
+        frame.push(numToppledPins);
+        console.log('should set state now');
+        this.setState({
+          [`${this.state.currentFrame}`]: frame,
+          scores
+        });
+      } else if (frame.length === 1) {
+        if (strikeBonus && strikeBonus.length) {
+          console.log('This is strike bonus');
+          scores = scores.concat(strikeBonus);
+        }
+        if (frame[0] + numToppledPins < 10) {
+          scores = scores.concat(
+            frame[0] + numToppledPins + scores[scores.length - 1]
+          );
+        }
+        frame.push(numToppledPins);
+        this.setState({
+          [`${this.state.currentFrame}`]: frame,
+          scores
+        });
+      } else {
+        console.log('finalFrame', frame);
+        if (frame[0] + frame[1] < 10) {
+          scores.push(frame[0] + frame[1] + prevScore);
+        } else if (frame[0] + frame[1] >= 10) {
+          scores.push(frame[0] + frame[1] + prevScore + numToppledPins);
+          frame.push(numToppledPins);
+        }
+        this.setState({
+          [`${this.state.currentFrame}`]: frame,
+          scores
+        });
+      }
+    }
   }
 
   advanceFrame() {
     const nextFrame =
-      this.state.currentFrame < 10 ? this.state.currentFrame + 1 : null;
+      this.state.currentFrame < 10 ? this.state.currentFrame + 1 : 10;
     this.setState((prevState) => {
       return { currentFrame: nextFrame };
     });

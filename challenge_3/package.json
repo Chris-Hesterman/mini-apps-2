@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js",
-    "startPack": "webpack serve --open chrome",
+    "startHot": "webpack serve --open chrome",
     "build": "webpack -d --watch"
   },
   "author": "Chris Hesterman",
